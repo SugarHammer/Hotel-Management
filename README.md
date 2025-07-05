@@ -37,9 +37,6 @@ Java + SpringBoot + Vue + Mybatis + Mysql
 ![输入图片说明](photo/1-13.png)
 ![输入图片说明](photo/1-14.png)
 ![输入图片说明](photo/1-15.png)
-![输入图片说明](photo/1-16.png)
-![输入图片说明](photo/1-17.png)
-![输入图片说明](photo/1-18.png)
 
 
 ### 环境需求(可免费提供)
