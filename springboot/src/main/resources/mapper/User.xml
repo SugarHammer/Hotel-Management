@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apartment.demo.mapper.UserMapper">
+
+    <select id="findAllUser" resultType="com.apartment.demo.entity.User">
+        select * from user
+        where 1=1
+        <if test="nickName != null">
+            and nickname like CONCAT('%', #{nickName}, '%')
+        </if>
+    </select>
+
+    <select id="findAllConcractUser" resultType="com.apartment.demo.entity.User">
+        select * from user
+        where id in (SELECT user_id FROM contract WHERE admin_id = #{adminId})
+        <if test="nickName != null">
+            and nickname like CONCAT('%', #{nickName}, '%')
+        </if>
+    </select>
+
+    <select id="findAllAdmin" resultType="com.apartment.demo.entity.User">
+        select id,truename from user,user_role
+        where user.id = user_role.user_id and user.id not in (
+        SELECT admin_id from apartment) and user_role.role_id = 4
+    </select>
+
+    <select id="findAllEngineer" resultType="com.apartment.demo.entity.User">
+        select id,nickname
+        from user,user_role
+        where user.id = user_role.user_id
+        and user_role.role_id = 3
+        and user_id not in (
+            select engineer_id
+            from engineer where state = 1)
+    </select>
+
+    <select id="findAllUserNoContract" resultType="com.apartment.demo.entity.User">
+        select u.id,u.truename
+        from `user` u,user_role ur,role r
+        WHERE u.id = ur.user_id and ur.role_id = r.id and r.id = 2
+        and u.id not in (select c.user_id from contract c)
+    </select>
+
+
+</mapper>

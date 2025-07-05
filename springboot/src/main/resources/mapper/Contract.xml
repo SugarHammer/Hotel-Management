@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apartment.demo.mapper.ContractMapper">
+
+    <select id="findContractByUserId" resultType="com.apartment.demo.entity.Contract">
+        SELECT res.*,u.truename as user_name
+        from (SELECT c.*,u.truename as admin_name,a.`name` as apartment_name,r.`name` as room_name
+                from contract c,`user` u,apartment a,room r
+                where c.admin_id = u.id and c.apartment_id = a.id and c.room_id = r.id) res,`user` u
+        where res.user_id = u.id
+            and user_id = #{userId}
+    </select>
+
+    <select id="findAllContract" resultType="com.apartment.demo.entity.Contract">
+        SELECT res.*,u.truename as user_name
+        from (SELECT c.*,u.truename as admin_name,a.`name` as apartment_name,r.`name` as room_name
+        from contract c,`user` u,apartment a,room r
+        where c.admin_id = u.id and c.apartment_id = a.id and c.room_id = r.id) res,`user` u
+        where res.user_id = u.id
+        <if test="userId != null and userId != ''">
+            and admin_id = #{userId}
+        </if>
+        <if test="userName != null and userName != ''">
+            and username like CONCAT('%', #{userName}, '%')
+        </if>
+    </select>
+
+</mapper>

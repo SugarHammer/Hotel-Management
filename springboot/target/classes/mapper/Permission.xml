@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apartment.demo.mapper.PermissionMapper">
+
+    <select id="getRolePermissionByRoleId" resultType="com.apartment.demo.entity.Permission">
+      select * from permission p,role_permission r
+      where r.role_id = #{roleId} and r.permission_id = p.id and p.pid = 0
+    </select>
+
+    <select id="getRoleChangePermissionByRoleId" resultType="com.apartment.demo.entity.Permission">
+      select * from permission p,role_permission r
+      where r.role_id = #{roleId} and r.permission_id = p.id
+    </select>
+
+    <select id="getChildrenPermissionyPid" resultType="com.apartment.demo.entity.Permission">
+      select * from permission p,role_permission r
+      where r.role_id = #{roleId} and r.permission_id = p.id and p.pid = #{Pid}
+    </select>
+
+</mapper>

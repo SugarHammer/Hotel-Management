@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apartment.demo.mapper.RoomMapper">
+
+    <select id="findAllRoom" resultType="com.apartment.demo.entity.Room">
+        select r.id ,r.`name`,r.has_people,r.pic,r.price,r.password,a.id as apartment_id,a.`name` as apartment_name
+        from apartment a,room r
+        WHERE a.id = r.apartment_id
+        <if test="name != null">
+            and r.name like CONCAT('%', #{name}, '%')
+        </if>
+        <if test="adminId != null">
+            and a.admin_id = #{adminId}
+        </if>
+        <if test="apartmentId != null">
+            and a.id = #{apartmentId}
+        </if>
+        <if test="hasPeople != null">
+            and r.has_people = #{hasPeople}
+        </if>
+    </select>
+
+    <select id="findEmptyRoom" resultType="com.apartment.demo.entity.Room">
+        select r.id ,r.`name`,r.has_people,r.pic,r.price,a.id as apartment_id,a.`name` as apartment_name
+        from apartment a,room r
+        WHERE a.id = r.apartment_id
+        and r.has_people = '否'
+        <if test="adminId != null">
+            and a.admin_id = #{adminId}
+        </if>
+    </select>
+
+    <select id="allEngineerRoom" resultType="com.apartment.demo.entity.Room">
+        select r.id,r.name,a.admin_id,c.user_id from room r,apartment a,contract c
+        where r.apartment_id = a.id and r.id = c.room_id and r.id in
+        (select room_id from engineer where state = 0)
+        <if test="adminId != null">
+            and admin_id = #{adminId}
+        </if>
+        <if test="userId != null">
+            and admin_id = #{adminId}
+        </if>
+    </select>
+
+    <select id="findRoomByRoomId" resultType="com.apartment.demo.entity.Room">
+        select r.id ,r.`name`,r.has_people,r.pic,r.price,r.password,a.id as apartment_id,a.`name` as apartment_name
+        from apartment a,room r
+        WHERE a.id = r.apartment_id
+        and r.id = #{roomId}
+    </select>
+
+    <select id="findRoomByRandom" resultType="com.apartment.demo.entity.Room">
+        select r.id ,r.`name`,r.has_people,r.pic,r.price,a.id as apartment_id,a.`name` as apartment_name
+        from apartment a,room r
+        WHERE a.id = r.apartment_id and r.has_people = '否'
+        ORDER BY RAND() LIMIT 4
+    </select>
+
+
+
+</mapper>

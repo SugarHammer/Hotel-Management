@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d7fc5"],{"78c1":function(n,c,t){"use strict";t.r(c);var e=t("7a23");function r(n,c){return Object(e["J"])(),Object(e["m"])("h1",null," 欢迎来到智慧公寓管理系统test ")}var u=t("d959"),d=t.n(u);const o={},s=d()(o,[["render",r]]);c["default"]=s}}]);
+//# sourceMappingURL=chunk-2d0d7fc5.9bc23044.js.map

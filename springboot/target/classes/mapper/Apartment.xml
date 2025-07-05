@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apartment.demo.mapper.ApartmentMapper">
+
+    <select id="findAllApartment" resultType="com.apartment.demo.entity.Apartment">
+        select a.*,u.truename as admin_name,u.telephone
+        from apartment a,user u
+        WHERE a.admin_id = u.id
+        <if test="name != null">
+            and a.name like CONCAT('%', #{name}, '%')
+        </if>
+        <if test="adminId != null">
+            and u.id = #{adminId}
+        </if>
+    </select>
+
+    <select id="findAllApartmentList" resultType="com.apartment.demo.entity.Apartment">
+        select a.*,u.truename as admin_name,u.telephone
+        from apartment a,user u
+        WHERE a.admin_id = u.id
+    </select>
+
+    <select id="findApartmentByRoomId" resultType="com.apartment.demo.entity.Apartment">
+        select a.*
+        from apartment a,room r
+        WHERE r.apartment_id = a.id
+        and r.id = #{roomId}
+    </select>
+
+    <select id="findApartmentByRandom" resultType="com.apartment.demo.entity.Apartment">
+        select a.*,u.truename as admin_name,u.telephone
+        from apartment a,user u
+        WHERE a.admin_id = u.id
+        ORDER BY RAND() LIMIT 4
+    </select>
+
+</mapper>
